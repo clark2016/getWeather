@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import au.co.pactera.getweather.dto.WeatherDto;
 import au.co.pactera.getweather.properties.annotation.PropertyInfo;
@@ -24,7 +25,6 @@ import au.co.pactera.getweather.service.WeatherService;
 
 @SessionScoped
 @Controller
-@EnableAutoConfiguration
 @RequestMapping("/")
 public class WeatherController {
 
@@ -70,10 +70,6 @@ public class WeatherController {
 		// function end,output log
 		logger.info(String.format(propertyInfo.getInfomsg2(), "getWeather"));
 		return "weather";
-	}
-
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(Application.class, args);
 	}
 
 	/**
