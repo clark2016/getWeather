@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Application;
 import javax.faces.bean.SessionScoped;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,7 @@ import au.co.pactera.getweather.service.WeatherService;
 
 @SessionScoped
 @Controller
+@EnableAutoConfiguration
 @RequestMapping("/")
 public class WeatherController {
 
@@ -50,10 +54,10 @@ public class WeatherController {
 		String defaultCityCd = cityList.get(defaultCityNm).toString();
 
 		WeatherDto weather = new WeatherDto();
-		
+
 		try {
 			weather = weatherService.getWeatherInfoByCd(defaultCityCd, defaultCityNm);
-			
+
 		} catch (Exception e) {
 
 			logger.error(String.format(propertyInfo.getErrormsg1(), "getWeather", e.getMessage()));
@@ -61,11 +65,15 @@ public class WeatherController {
 			model.addAttribute("errormsg", propertyInfo.getErrormsg2());
 		}
 
-		setValueToModel(weather,model);
-		
+		setValueToModel(weather, model);
+
 		// function end,output log
 		logger.info(String.format(propertyInfo.getInfomsg2(), "getWeather"));
 		return "weather";
+	}
+
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(Application.class, args);
 	}
 
 	/**
@@ -81,9 +89,9 @@ public class WeatherController {
 		String currentCityCd = cityList.get(currentCity).toString();
 
 		WeatherDto weather = new WeatherDto();
-		
+
 		try {
-			weather= weatherService.getWeatherInfoByCd(currentCityCd, currentCity);
+			weather = weatherService.getWeatherInfoByCd(currentCityCd, currentCity);
 
 		} catch (Exception e) {
 
@@ -91,33 +99,33 @@ public class WeatherController {
 
 			model.addAttribute("errormsg", propertyInfo.getErrormsg2());
 		}
-		
-		setValueToModel(weather,model);
-		
+
+		setValueToModel(weather, model);
+
 		logger.info(String.format(propertyInfo.getInfomsg2(), "changeCity"));
 
 		return "weather";
 
 	}
-	
+
 	/**
 	 * This function initialize controller to get city list from properties file
 	 * 
-	 * @return 
+	 * @return
 	 */
 	@PostConstruct
 	void init() {
-		
+
 		logger.info(String.format(propertyInfo.getInfomsg1(), "init"));
 
 		createCityList();
 
-		//String defaultCityName = propertyInfo.getDefaultCity();
-		
+		// String defaultCityName = propertyInfo.getDefaultCity();
+
 		logger.info(String.format(propertyInfo.getInfomsg2(), "init"));
 
 	}
-	
+
 	/**
 	 * This method rip out the weather data to populate the ModelMap
 	 * 
@@ -125,29 +133,30 @@ public class WeatherController {
 	 *            - WeatherDto
 	 * @param model
 	 *            - ModelMap
-	 * @return 
+	 * @return
 	 */
-	private void setValueToModel(WeatherDto weather,ModelMap model) {
-		
+	private void setValueToModel(WeatherDto weather, ModelMap model) {
+
 		model.addAttribute("citylist", cityList);
-		
+
 		model.addAttribute("welcomemsg", "");
-		
+
 		model.addAttribute("cityName", weather.getCity());
-		
+
 		model.addAttribute("updatedTime", weather.getUpdTime());
-		
+
 		model.addAttribute("weather", weather.getWeather());
-		
+
 		model.addAttribute("temperature", weather.getTemperature());
 
-		model.addAttribute("wind",weather.getWind());
-		
+		model.addAttribute("wind", weather.getWind());
+
 	}
+
 	/**
 	 * This method split the properties data to city map
 	 * 
-	 * @return 
+	 * @return
 	 */
 	private void createCityList() {
 		String[] tmpcityNameList = propertyInfo.getCitieNameList().split(";");

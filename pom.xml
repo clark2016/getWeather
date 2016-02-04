@@ -5,13 +5,14 @@
 	<artifactId>GetWeather-war</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>GetWeather Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<spring.version>4.0.2.RELEASE</spring.version>
 		<spring.boot.version>1.1.4.RELEASE</spring.boot.version>
-		
+		<start-class>au.co.pactera.getweather.Application</start-class>
 	</properties>
 
 	<dependencies>
