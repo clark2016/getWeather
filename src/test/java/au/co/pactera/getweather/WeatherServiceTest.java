@@ -23,9 +23,9 @@ import au.co.pactera.getweather.dto.WeatherDto;
 import au.co.pactera.getweather.properties.annotation.PropertyInfo;
 import au.co.pactera.getweather.service.WeatherService;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
-@SpringApplicationConfiguration(classes = WeatherController.class)
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml" })
 public class WeatherServiceTest {
 
 	@Autowired
@@ -44,31 +44,20 @@ public class WeatherServiceTest {
 		assertNotNull(wto.getWind());
 		assertNotNull(wto.getCity());
 	}
+
+	// close the network and test
+/*	@Test(expected=MalformedURLException.class)
+	public void failueTestServerNotRechable() throws IOException, Exception {
+		String url = propertyInfo.getOpenUrl();
+		//propertyInfo.setOpenUrl("aadsfasfsdf");
+		weatherService.getWeatherInfoByCd("7839805", "Melbourne");
+		//propertyInfo.setOpenUrl(url);
+	 }*/
 	
 	@Test(expected=JSONException.class)
 	public void failueTestUnknownCityName() throws IOException, Exception {
 		weatherService.getWeatherInfoByCd("a1111234", "Melbourne");
 	 }
-	
-	@Test(expected=RuntimeException.class)
-	public void failueTestServerNotRechable() throws IOException, Exception {
-		propertyInfo.setOpenUrl("aadsfasfsdf");
-		weatherService.getWeatherInfoByCd("a1111234", "Melbourne");
-	 }
-	
-/*	@Test(expected=MalformedURLException.class)
-	public void failueTestUnknownURL() throws IOException, Exception {
-		weatherService.getWeather("Melbourne,Aus", propertyInfo.getAppID(), "");
-	 }
-	
-	@Test(expected=UnknownHostException.class)
-	public void failueTestServerNotRechable() throws IOException, Exception {
-		    weatherService.getWeather("Melbourne,Aus", propertyInfo.getAppID(), propertyInfo.getAppURL());
-	 }
-	
-	@Test(expected=RuntimeException.class)
-	public void failureTestBlankAppID() throws JSONException, IOException, Exception {
-			weatherService.getWeather("Melbourne,Aus", "", propertyInfo.getAppURL());
-		}*/
+
 
 }
