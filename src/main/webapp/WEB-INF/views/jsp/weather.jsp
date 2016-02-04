@@ -24,32 +24,33 @@
 </nav>
 <div class="jumbotron">
 	<div class="container">
-		<h1>${title}</h1>
+		<h1></h1>
 		<p>
 		<div class="dropdown">
 			<button class="btn btn-primary dropdown-toggle" type="button"
 				data-toggle="dropdown">
-				Choose a city <span class="caret"></span>
+				${cityName} <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu">
-				<li><a href="index.jsp?dcd=01">Sydney</a></li>
-				<li><a href="index.jsp?dcd=02">Melbourne</a></li>
-				<li><a href="index.jsp?dcd=03">Wollongong</a></li>
+
+				<c:forEach items="${citylist}" var="row">
+
+					<li><a href="<c:out value="${row.key}"/>"><c:out
+								value="${row.key}" /></a></li>
+				</c:forEach>
 			</ul>
 		</div>
 	</div>
 </div>
 <div class="container">
 	<table class="table">
-		<thead>
-			<tr>
-				<th>City</th>
-				<th><c:if test="${not empty cityName}">
-				${cityName}
-			</c:if></th>
-			</tr>
-		</thead>
 		<tbody>
+			<tr>
+				<td>City</td>
+				<td><c:if test="${not empty cityName}">
+				${cityName}
+			</c:if></td>
+			</tr>
 			<tr>
 				<td>Updated time</td>
 				<td><c:if test="${not empty updatedTime}">
@@ -76,6 +77,14 @@
 			</tr>
 		</tbody>
 	</table>
+
+	<c:if test="${not empty errormsg}">
+		<div class="alert alert-info">
+			<strong>Message</strong> ${errormsg}
+		</div>
+
+	</c:if>
+
 	<hr>
 	<footer>
 		<p>&copy; Clark 2016</p>
