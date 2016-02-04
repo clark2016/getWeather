@@ -87,18 +87,17 @@ public class WeatherServiceImpl implements WeatherService {
 			throws IOException, Exception {
 		String jsonString = null;
 		URL url = new URL(String.format(openURL, cityCd, appID));
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Accept", "application/json");
-		if (conn.getResponseCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+		HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+		huc.setRequestMethod("GET");
+		huc.setRequestProperty("Accept", "application/json");
+		if (huc.getResponseCode() != 200) {
+			huc.disconnect();
+			throw new RuntimeException("Failed : HTTP error code : " + huc.getResponseCode());
 		}
-		BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+		BufferedReader br = new BufferedReader(new InputStreamReader((huc.getInputStream())));
 		jsonString = br.readLine();
-		conn.disconnect();
+		br.close();
+		huc.disconnect();
 		return jsonString;
 	}
-
-
-
 }
