@@ -24,8 +24,6 @@ import au.co.pactera.getweather.service.WeatherService;
 @RequestMapping("/")
 public class WeatherController {
 
-	private String defaultCityName;
-
 	private Map<String, String> cityList;
 
 	private static Logger logger = LoggerFactory.getLogger(WeatherController.class);
@@ -114,7 +112,7 @@ public class WeatherController {
 
 		createCityList();
 
-		defaultCityName = propertyInfo.getDefaultCity();
+		//String defaultCityName = propertyInfo.getDefaultCity();
 		
 		logger.info(String.format(propertyInfo.getInfomsg2(), "init"));
 
