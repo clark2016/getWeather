@@ -82,7 +82,7 @@ public class WeatherController {
 
 		logger.info(String.format(propertyInfo.getInfomsg1(), "changeCity"));
 
-		String currentCityCd = cityList.get(currentCity).toString();
+		String currentCityCd = cityList.get(currentCity);
 
 		WeatherDto weather = new WeatherDto();
 
